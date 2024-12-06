@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   darkmode: false,
+  language: "uz",
 };
 
 const controlSlice = createSlice({
@@ -11,6 +12,9 @@ const controlSlice = createSlice({
   reducers: {
     setDarkModee(state, action) {
       state.darkmode = action.payload;
+    },
+    setLanguage: (state, { payload }) => {
+      state.language = payload;
     },
   },
 });

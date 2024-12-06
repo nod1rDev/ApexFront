@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="uz">
       <head>
-        <link rel="icon" href="/favicon.png" />
+        <link rel="icon" href="/logo.svg" />
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap"
           rel="stylesheet"

@@ -34,13 +34,20 @@ export function Header({
         darkMode ? "bg-gray-900 text-white" : "bg-white text-black"
       } shadow-xl`}
     >
-      <div className="md:max-w-[80%] mx-auto py-4 flex justify-between items-center">
+      <div className="max-w-[95%] md:max-w-[85%] mx-auto py-4 flex justify-between items-center">
         <Link href={"/"}>
-          <div className="flex gap-1 justify-center items-center">
-            <img className="w-[40px] h-[40px]" src="/favicon.png" alt="Logo" />
-            <span className="text-[22px] font-bold leading-[24.48px]">
-              ApexBrat
-            </span>
+          <div className="flex items-center space-x-2">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M16 2L2 9L16 16L30 9L16 2Z" fill="#3B82F6" />
+              <path d="M2 23L16 30L30 23V9L16 16L2 9V23Z" fill="#2563EB" />
+            </svg>
+            <span className="text-xl font-bold dark:text-white text-gray-900">ApexBart</span>
           </div>
         </Link>
 
@@ -69,6 +76,15 @@ export function Header({
               className="hover:text-blue-500 cursor-pointer"
             >
               {t[currentLanguage].about_us}
+            </ScrollLink>
+            <ScrollLink
+              to="service"
+              smooth={true}
+              duration={500}
+              offset={-70}
+              className="hover:text-blue-500 cursor-pointer"
+            >
+              {t[currentLanguage].service}
             </ScrollLink>
             <ScrollLink
               to="projects"
@@ -225,6 +241,16 @@ export function Header({
               className="hover:text-blue-500 cursor-pointer"
             >
               {t[currentLanguage].about_us}
+            </ScrollLink>
+            <ScrollLink
+              to="service"
+              onClick={() => setIsMenuOpen(false)}
+              smooth={true}
+              duration={500}
+              offset={-70}
+              className="hover:text-blue-500 cursor-pointer"
+            >
+              {t[currentLanguage].service}
             </ScrollLink>
             <ScrollLink
               to="projects"
