@@ -6,10 +6,12 @@ import Footer from "./Components/Footer";
 import t from "./utils/language";
 import { useDispatch } from "react-redux";
 import { setDarkModee } from "./redux/Control";
+import Image from "next/image";
 
 function Landing() {
   const [darkMode, setDarkMode] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("uz");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const savedMode = localStorage.getItem("darkMode");
@@ -17,17 +19,13 @@ function Landing() {
     if (savedMode) setDarkMode(JSON.parse(savedMode));
     if (savedLanguage) setCurrentLanguage(savedLanguage);
   }, []);
-  const dispatch = useDispatch();
+
   useEffect(() => {
     localStorage.setItem("darkMode", darkMode);
     localStorage.setItem("language", currentLanguage);
     document.documentElement.classList.toggle("dark", darkMode);
-    if (darkMode) {
-      dispatch(setDarkModee(true));
-    } else {
-      dispatch(setDarkModee(false));
-    }
-  }, [darkMode, currentLanguage]);
+    dispatch(setDarkModee(darkMode));
+  }, [darkMode, currentLanguage, dispatch]);
 
   return (
     <div
@@ -75,7 +73,7 @@ function Landing() {
                 smooth={true}
                 duration={500}
                 offset={-70}
-                className="btn btn-outline  btn-secondary px-6 py-3 text-lg text-white font-semibold"
+                className="btn btn-outline btn-secondary px-6 py-3 text-lg text-white font-semibold"
               >
                 {t[currentLanguage].projects}
               </ScrollLink>
@@ -94,10 +92,12 @@ function Landing() {
             {t[currentLanguage].about_intro}
           </p>
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <img
+            <Image
               src="/about.jpg"
               alt={t[currentLanguage].about_us_alt}
               className="rounded-lg shadow-lg mx-auto"
+              width={400}
+              height={300}
             />
             <div>
               <p className="text-lg">{t[currentLanguage].about_detail}</p>
@@ -121,119 +121,28 @@ function Landing() {
         </h2>
         <div className="grid md:grid-cols-3 gap-8">
           {/* Example Project */}
-          <div className="bg-white p-6 cursor-pointer rounded-lg dark:bg-gray-800 shadow-lg">
-            <img
-              className="w-[400px] h-[200px]"
-              src="https://rubynet.ru/wp-content/uploads/2022/04/Bot-telega.jpg"
-              alt=""
-            />
-            <h3 className="text-2xl font-semibold mb-2">Telegram bot</h3>
-            <p className="text-sm">
-              Loyihaning qisqacha ta'rifi. O'z ichiga olgan asosiy ma'lumotlar.
-            </p>
-          </div>
-
-          <div className="bg-white p-6 cursor-pointer rounded-lg dark:bg-gray-800 shadow-lg">
-            <img
-              className="w-[400px] h-[200px]"
-              src="https://frankfurt.apollo.olxcdn.com/v1/files/3d3qhwixfp5i3-UZ/image"
-              alt=""
-            />
-            <h3 className="text-2xl font-semibold mb-2">Telegram AI bot</h3>
-            <p className="text-sm">
-              Loyihaning qisqacha ta'rifi. O'z ichiga olgan asosiy ma'lumotlar.
-            </p>
-          </div>
-
-          <div className="bg-white p-6 cursor-pointer rounded-lg dark:bg-gray-800 shadow-lg">
-            <img
-              className="w-[400px] h-[200px]"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-hSKkyP8_2StAzNVROR5zdGR6zRIQmfx60A&s"
-              alt=""
-            />
-            <h3 className="text-2xl font-semibold mb-2">Telegram chat bot</h3>
-            <p className="text-sm">
-              Loyihaning qisqacha ta'rifi. O'z ichiga olgan asosiy ma'lumotlar.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Us Section */}
-      <section id="contact" className="py-16 px-4 bg-gray-100 dark:bg-gray-900">
-        <h2 className="text-center text-3xl font-bold mb-6">
-          {t[currentLanguage].contact_us}
-        </h2>
-        <p className="text-center text-lg mb-6">{t[currentLanguage].contact}</p>
-        <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-          <form>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label
-                  className="block text-sm font-medium mb-2"
-                  htmlFor="first-name"
-                >
-                  {t[currentLanguage].first_name}
-                </label>
-                <input
-                  type="text"
-                  id="first-name"
-                  placeholder={t[currentLanguage].first_name_placeholder}
-                  className="input input-bordered w-full"
-                />
-              </div>
-              <div>
-                <label
-                  className="block text-sm font-medium mb-2"
-                  htmlFor="last-name"
-                >
-                  {t[currentLanguage].last_name}
-                </label>
-                <input
-                  type="text"
-                  id="last-name"
-                  placeholder={t[currentLanguage].last_name_placeholder}
-                  className="input input-bordered w-full"
-                />
-              </div>
-            </div>
-            <div className="mt-6">
-              <label className="block text-sm font-medium mb-2" htmlFor="email">
-                {t[currentLanguage].email}
-              </label>
-              <input
-                type="email"
-                id="email"
-                placeholder={t[currentLanguage].email_placeholder}
-                className="input input-bordered w-full"
-              />
-            </div>
-            <div className="mt-6">
-              <label
-                className="block text-sm font-medium mb-2"
-                htmlFor="message"
-              >
-                {t[currentLanguage].message}
-              </label>
-              <textarea
-                id="message"
-                placeholder={t[currentLanguage].message_placeholder}
-                rows={5}
-                className="textarea textarea-bordered w-full"
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              className="btn text-white btn-primary w-full mt-6 py-3 text-lg"
+          {[
+            { title: "Telegram bot", img: "bot-telega.jpg" },
+            { title: "Telegram AI bot", img: "ai-bot.jpg" },
+            { title: "Telegram chat bot", img: "chat-bot.jpg" },
+          ].map((project, idx) => (
+            <div
+              key={idx}
+              className="bg-white p-6 cursor-pointer rounded-lg dark:bg-gray-800 shadow-lg"
             >
-              {t[currentLanguage].send_message}
-            </button>
-          </form>
-          <div className="mt-8 text-center">
-            <p className="text-sm text-gray-500">
-              {t[currentLanguage].response_time}
-            </p>
-          </div>
+              <Image
+                src={`/${project.img}`}
+                alt={project.title}
+                width={400}
+                height={200}
+                className="rounded"
+              />
+              <h3 className="text-2xl font-semibold mb-2">{project.title}</h3>
+              <p className="text-sm">
+                Loyihaning qisqacha ta&apos;riflari o&apos;z ichiga olgan.
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 

@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={` antialiased h-[100vh] bg-white dark:bg-gray-900`}>
-        <Root children={children} />
+        <Root>{children}</Root>
       </body>
     </html>
   );
