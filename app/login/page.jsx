@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import t from "../utils/language";
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -16,7 +17,7 @@ function LoginPage() {
     const savedLanguage = localStorage.getItem("language");
     if (savedLanguage) setCurrentLanguage(savedLanguage);
   }, []);
-
+  const navigate = useRouter();
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -30,13 +31,16 @@ function LoginPage() {
     setSuccess("");
 
     try {
-      const response = await fetch("https://apexbrat1.onrender.com/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
+      const response = await fetch(
+        "https://apexbrat1.onrender.com/user/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }
+      );
 
       if (!response.ok) {
         const data = await response.json();
@@ -59,7 +63,10 @@ function LoginPage() {
         />
       </div>
       <div className="w-full md:w-[50%] ">
-        <button className="flex justify-start items-center gap-2 -mt-6 ml-4">
+        <button
+          onClick={() => navigate.back()}
+          className="flex justify-start items-center gap-2 mt-4 md:-mt-10 ml-4"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -69,7 +76,9 @@ function LoginPage() {
           >
             <path d="M12 2C17.52 2 22 6.48 22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2ZM12 20C16.42 20 20 16.42 20 12C20 7.58 16.42 4 12 4C7.58 4 4 7.58 4 12C4 16.42 7.58 20 12 20ZM12 11H16V13H12V16L8 12L12 8V11Z"></path>
           </svg>
-          <span className="text-black font-[600]">Orqaga</span>
+          <span className="text-black font-[600]">
+            {t[currentLanguage].back}
+          </span>
         </button>
         <div className="w-[390px] p-8 rounded-lg    mx-auto flex flex-col gap-10">
           <img

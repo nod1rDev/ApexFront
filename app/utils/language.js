@@ -61,6 +61,7 @@ const t = {
     cookie_policy: "Cookie siyosati",
     company_info:
       "Apex Brat Solution. Ishonchli texnologiyalar taqdim etmoqda 2023-yildan beri",
+      back:"orqaga"
   },
   ru: {
     home: "Главная",
@@ -110,6 +111,7 @@ const t = {
     email: "Электронная почта",
     email_placeholder: "Ваш email",
     message: "Сообщение",
+    back:"Назад",
     message_placeholder: "Напишите ваше сообщение здесь...",
     send_message: "Отправить сообщение",
     response_time: "Мы ответим на ваше сообщение в течение 24 часов.",
@@ -135,6 +137,7 @@ const t = {
       "Our mission is to satisfy our clients through high-quality services and innovative solutions.",
     contact_message: "Fill out the form below to get in touch with us.",
     service: "Services",
+    back:"go back",
     branding: "Branding",
     design: "Design",
     marketing: "Marketing",
