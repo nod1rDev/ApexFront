@@ -15,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="uz">
-      <Head>
+      <head>
         {/* SEO Tags */}
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -50,7 +50,7 @@ export default function RootLayout({ children }) {
         />
         {/* Favicon */}
         <link rel="icon" href="/logo.svg" />
-      </Head>
+      </head>
 
       <body className="antialiased h-[100vh] bg-white dark:bg-gray-900">
         <Root>
