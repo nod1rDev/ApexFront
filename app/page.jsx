@@ -424,18 +424,18 @@ function Landing() {
                       <p className="text-gray-400">{member.role}</p>
                       <div className="ml-3">
                         <div className="flex gap-2 mt-2 items-start">
-                          <div className="w-[10px] h-[8px] mt-2 rounded-[999px] bg-black"></div>
+                          <div className="w-[10px] h-[8px] dark:bg-white mt-2 rounded-[999px] bg-black"></div>
                           <span className="text-gray-400">
-                            <strong className="text-black mr-1 font-bold">
+                            <strong className="text-black dark:text-white mr-1 font-bold">
                               Expertise:
                             </strong>
                             {member.exportise}
                           </span>
                         </div>
                         <div className="flex gap-2 items-start">
-                          <div className="w-[10px] h-[8px] mt-2 rounded-[999px] bg-black"></div>
+                          <div className="w-[10px] h-[8px] dark:bg-white mt-2 rounded-[999px] bg-black"></div>
                           <span className="text-gray-400">
-                            <strong className="text-black mr-1 font-bold">
+                            <strong className="text-black  dark:text-white mr-1 font-bold">
                               Responsibilities:
                             </strong>
                             {member.responsibility}
@@ -466,18 +466,18 @@ function Landing() {
                     <p className="text-gray-400">{member.role}</p>
                     <div className="ml-3">
                       <div className="flex gap-2 mt-2 items-start">
-                        <div className="w-[10px] h-[8px] mt-2 rounded-[999px] bg-black"></div>
+                        <div className="w-[10px] h-[8px] dark:bg-white mt-2 rounded-[999px] bg-black"></div>
                         <span className="text-gray-400">
-                          <strong className="text-black mr-1 font-bold">
+                          <strong className="text-black  dark:text-white mr-1 font-bold">
                             Expertise:
                           </strong>
                           {member.exportise}
                         </span>
                       </div>
                       <div className="flex gap-2 items-start">
-                        <div className="w-[10px] h-[8px] mt-2 rounded-[999px] bg-black"></div>
+                        <div className="w-[10px] h-[8px] mt-2 rounded-[999px] bg-black dark:bg-white"></div>
                         <span className="text-gray-400">
-                          <strong className="text-black mr-1 font-bold">
+                          <strong className="text-black  dark:text-white mr-1 font-bold">
                             Responsibilities:
                           </strong>
                           {member.responsibility}
