@@ -10,7 +10,7 @@ const controlSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setDarkModee(state, action) {
+    setDarkMode(state, action) {
       state.darkmode = action.payload;
     },
     setLanguage: (state, { payload }) => {
@@ -19,6 +19,6 @@ const controlSlice = createSlice({
   },
 });
 
-export const { setDarkModee } = controlSlice.actions;
+export const { setDarkMode, setLanguage } = controlSlice.actions;
 
 export default controlSlice.reducer;

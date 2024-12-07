@@ -3,30 +3,22 @@ import { motion } from "framer-motion";
 import { SunIcon, MoonIcon } from "@heroicons/react/solid";
 import { Link as ScrollLink } from "react-scroll"; // react-scroll kutubxonasidan ScrollLink
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import t from "../utils/language";
+import { setDarkMode, setLanguage } from "../redux/Control";
 
-export function Header({
-  currentLanguage,
-  setCurrentLanguage,
-  darkMode,
-  setDarkMode,
-  t,
-}) {
+export function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const darkMode = useSelector((s) => s.control.darkmode);
+  const dispatch = useDispatch();
+  const currentLanguage = useSelector((s) => s.control.language);
   const changeLanguage = (lang) => {
-    setCurrentLanguage(lang);
+    dispatch(setLanguage(lang));
     setIsDropdownOpen(false);
     setIsMenuOpen(false); // Close the menu when a language is selected
   };
-
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode]);
+  const auth = useSelector((s) => s.auth.user);
 
   return (
     <div
@@ -47,7 +39,9 @@ export function Header({
               <path d="M16 2L2 9L16 16L30 9L16 2Z" fill="#3B82F6" />
               <path d="M2 23L16 30L30 23V9L16 16L2 9V23Z" fill="#2563EB" />
             </svg>
-            <span className="text-xl font-bold dark:text-white text-gray-900">ApexBart</span>
+            <span className="text-xl font-bold dark:text-white text-gray-900">
+              ApexBart
+            </span>
           </div>
         </Link>
 
@@ -152,7 +146,7 @@ export function Header({
 
           {/* Dark Mode Toggle */}
           <motion.button
-            onClick={() => setDarkMode(!darkMode)}
+            onClick={() => dispatch(setDarkMode(!darkMode))}
             className="text-black dark:text-white px-3 py-2 rounded-md flex items-center"
             whileTap={{ scale: 0.95 }}
           >
@@ -164,24 +158,35 @@ export function Header({
           </motion.button>
 
           {/* Sign In & Sign Up buttons */}
-          <div className=" gap-4 hidden md:flex">
-            <Link href="/login">
+          {auth?.ok ? (
+            <Link href="/dashboard">
               <motion.button
-                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                className="bg-blue-500 hidden md:block text-white px-4 py-2 rounded-md hover:bg-blue-600"
                 whileHover={{ scale: 1.05 }}
               >
-                Sign In
+                dashboard
               </motion.button>
             </Link>
-            <Link href="/signUp">
-              <motion.button
-                className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
-                whileHover={{ scale: 1.05 }}
-              >
-                Sign Up
-              </motion.button>
-            </Link>
-          </div>
+          ) : (
+            <div className=" gap-4 hidden md:flex">
+              <Link href="/login">
+                <motion.button
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  Sign In
+                </motion.button>
+              </Link>
+              <Link href="/signUp">
+                <motion.button
+                  className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  Sign Up
+                </motion.button>
+              </Link>
+            </div>
+          )}
 
           {/* Mobile Menu Button */}
           <div className=" block md:hidden">
@@ -321,24 +326,38 @@ export function Header({
             </div>
 
             {/* Sign In va Sign Up tugmalari */}
-            <Link href="/login">
-              <motion.button
-                className="bg-blue-500 text-white px-4 py-2 rounded-md w-full hover:bg-blue-600"
-                whileHover={{ scale: 1.05 }}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Sign In
-              </motion.button>
-            </Link>
-            <Link href="/signUp">
-              <motion.button
-                className="bg-green-500 text-white px-4 py-2 rounded-md w-full hover:bg-green-600"
-                whileHover={{ scale: 1.05 }}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Sign Up
-              </motion.button>
-            </Link>
+            {auth.ok ? (
+              <Link href="/dashboard">
+                <motion.button
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md w-full hover:bg-blue-600"
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Dashboard
+                </motion.button>
+              </Link>
+            ) : (
+              <>
+                <Link href="/login">
+                  <motion.button
+                    className="bg-blue-500 text-white px-4 py-2 rounded-md w-full hover:bg-blue-600"
+                    whileHover={{ scale: 1.05 }}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Sign In
+                  </motion.button>
+                </Link>
+                <Link href="/signUp">
+                  <motion.button
+                    className="bg-green-500 text-white px-4 py-2 rounded-md w-full hover:bg-green-600"
+                    whileHover={{ scale: 1.05 }}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Sign Up
+                  </motion.button>
+                </Link>
+              </>
+            )}
           </div>
         </motion.div>
       )}

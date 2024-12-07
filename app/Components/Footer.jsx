@@ -1,8 +1,13 @@
+"use client"
 import { Facebook, Instagram, Twitter } from "lucide-react";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 import { Link as ScrollLink } from "react-scroll";
+import t from "../utils/language";
 
-const Footer = ({ t, currentLanguage }) => {
+const Footer = () => {
+
+  const currentLanguage = useSelector((s) => s.control.language);
   return (
     <footer className="bg-slate-800 text-white">
       <div className="container max-w-[80%] mx-auto px-4 py-12">

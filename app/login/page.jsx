@@ -3,14 +3,18 @@
 import React, { useEffect, useState } from "react";
 import t from "../utils/language";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { openAlert } from "../redux/alerSlice";
+import { getStatusMessage } from "../utils/auth";
+import { setUser } from "../redux/authSlice";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("uz");
   const darkMode = useSelector((s) => s.control.darkmode);
   useEffect(() => {
@@ -25,8 +29,12 @@ function LoginPage() {
       document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
+
+  const dispatch = useDispatch();
+  const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setError("");
     setSuccess("");
 
@@ -42,15 +50,27 @@ function LoginPage() {
         }
       );
 
-      if (!response.ok) {
+      dispatch(
+        openAlert({
+          success: response.ok,
+          message: getStatusMessage(response.status),
+        })
+      );
+
+      if (response.ok) {
         const data = await response.json();
-        throw new Error(data.message || t[currentLanguage].error);
+
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ ok: data.ok, token: data.token, ...data.user })
+        );
+
+        dispatch(setUser({ ok: data.ok, token: data.token, ...data.user }));
+        router.push("/dashboard");
       }
 
-      setSuccess(t[currentLanguage].success);
-    } catch (err) {
-      setError(err.message || t[currentLanguage].error);
-    }
+      setLoading(false);
+    } catch (err) {}
   };
 
   return (
@@ -64,7 +84,7 @@ function LoginPage() {
       </div>
       <div className="w-full md:w-[50%] ">
         <button
-          onClick={() => navigate.back()}
+          onClick={() => navigate.push("/")}
           className="flex justify-start items-center gap-2 mt-4 md:-mt-10 ml-4"
         >
           <svg
@@ -82,7 +102,7 @@ function LoginPage() {
         </button>
         <div className="w-[390px] p-8 rounded-lg    mx-auto flex flex-col gap-10">
           <img
-            src="/favicon.png"
+            src="/logo.svg"
             className="w-[90px] mx-auto h-[90px] rounded-full"
             alt="Logo"
           />
@@ -122,7 +142,8 @@ function LoginPage() {
             </div>
             <button
               type="submit"
-              className="btn btn-primary w-full bg-indigo-600 hover:bg-indigo-700 text-white dark:bg-indigo-500 dark:hover:bg-indigo-600"
+              disabled={loading}
+              className="btn btn-primary dark:disabled:bg-blue-200 w-full disabled:bg-slate-100 disabled:text-gray-500 bg-indigo-600 hover:bg-indigo-700 text-white dark:bg-indigo-500 dark:hover:bg-indigo-600"
             >
               {t[currentLanguage].login_button}
             </button>

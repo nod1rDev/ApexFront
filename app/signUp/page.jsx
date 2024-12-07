@@ -3,28 +3,42 @@
 import React, { useEffect, useState } from "react";
 import t from "../utils/language";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { getStatusMessage } from "../utils/auth";
+import { openAlert } from "../redux/alerSlice";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
- 
+  const [loading, setLoading] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("uz");
   const darkMode = useSelector((s) => s.control.darkmode);
+  const dispatch = useDispatch();
+  const navigate = useRouter();
+
   useEffect(() => {
     const savedLanguage = localStorage.getItem("language");
     if (savedLanguage) setCurrentLanguage(savedLanguage);
   }, []);
 
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+
+  const router = useRouter();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
+    setLoading(true);
 
     try {
       const response = await fetch(
-        "https://apexbrat1.onrender.com/user/register",
+        "https://apexbrat1.onrender.com/user/register", // To'g'ri URL
         {
           method: "POST",
           headers: {
@@ -34,26 +48,32 @@ function LoginPage() {
         }
       );
 
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || t[currentLanguage].error);
-      }
+      const data = await response.json();
+      // JSON formatda javobni o'qing
+      dispatch(
+        openAlert({
+          success: response.ok,
+          message: getStatusMessage(response.status),
+        })
+      );
 
-      setSuccess(t[currentLanguage].success);
+      if (data.ok) {
+        router.push("/dashboard");
+        // Foydalanuvchini saqlash va navigatsiya
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ ok: data.ok, token: data.token, ...data.user })
+        );
+        dispatch(setUser({ ok: data.ok, token: data.token, ...data.user }));
+      }
     } catch (err) {
-      setError(err.message || t[currentLanguage].error);
+    } finally {
+      setLoading(false); // Yuklash holatini tugatish
     }
   };
-  const navigate = useRouter();
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode]);
+
   return (
-    <div className="min-h-screen flex flex-col md:flex-row items-center bg-white dark:bg-gray-900 justify-center  ">
+    <div className="min-h-screen flex flex-col md:flex-row items-center bg-white dark:bg-gray-900 justify-center">
       <div className="w-[50%] h-[100vh] hidden md:block">
         <img
           className="w-full h-full object-cover"
@@ -61,9 +81,9 @@ function LoginPage() {
           alt="Login background"
         />
       </div>
-      <div className="w-full md:w-[50%] ">
+      <div className="w-full md:w-[50%]">
         <button
-          onClick={() => navigate.back()}
+          onClick={() => navigate.push("/")}
           className="flex justify-start items-center gap-2 mt-4 md:-mt-10 ml-4"
         >
           <svg
@@ -75,13 +95,13 @@ function LoginPage() {
           >
             <path d="M12 2C17.52 2 22 6.48 22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2ZM12 20C16.42 20 20 16.42 20 12C20 7.58 16.42 4 12 4C7.58 4 4 7.58 4 12C4 16.42 7.58 20 12 20ZM12 11H16V13H12V16L8 12L12 8V11Z"></path>
           </svg>
-          <span className="text-black dark:text-white font-[600]">
+          <span className="text-black font-[600] dark:text-white">
             {t[currentLanguage].back}
           </span>
         </button>
-        <div className="w-[390px] p-8 rounded-lg    mx-auto flex flex-col gap-10">
+        <div className="w-[390px] p-8 rounded-lg mx-auto flex flex-col gap-10">
           <img
-            src="/favicon.png"
+            src="/logo.svg"
             className="w-[90px] mx-auto h-[90px] rounded-full"
             alt="Logo"
           />
@@ -121,12 +141,13 @@ function LoginPage() {
             </div>
             <button
               type="submit"
-              className="btn btn-primary w-full bg-indigo-600 hover:bg-indigo-700 text-white dark:bg-indigo-500 dark:hover:bg-indigo-600"
+              disabled={loading}
+              className="btn btn-primary dark:disabled:bg-blue-200 w-full disabled:bg-slate-100 disabled:text-gray-500 bg-indigo-600 hover:bg-indigo-700 text-white dark:bg-indigo-500 dark:hover:bg-indigo-600"
             >
               {t[currentLanguage].login_button}
             </button>
           </form>
-          <Link href={"/login"} className="link -mt-4 link-info text-[12px]">
+          <Link href={"/login"} className="link link-info text-[12px]">
             {t[currentLanguage].loginSentences}
           </Link>
         </div>

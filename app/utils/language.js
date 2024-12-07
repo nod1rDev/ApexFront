@@ -88,7 +88,8 @@ const t = {
     offer:
       "Biz AI avtomatizatsiyasi, ovozli yozib olish, tarjima va kontent yaratish bo'yicha keng qamrovli yechimlarni taklif etamiz.",
     featureProjects: "Tanlangan Loyihalar",
-    projectDiskription: "Ba'zi so'nggi loyihalarimizni ko'rib chiqing va mijozlarimizga maqsadlariga erishishda qanday yordam berganimizni ko'ring.",
+    projectDiskription:
+      "Ba'zi so'nggi loyihalarimizni ko'rib chiqing va mijozlarimizga maqsadlariga erishishda qanday yordam berganimizni ko'ring.",
     email: "Email",
     emailText: "contact@apexbart.xyz",
     phone: "Telefon",
@@ -102,8 +103,13 @@ const t = {
     sendMessage: "Xabarni yuborish",
     exploreServices: "Bizning xizmatlarimizni kashf eting",
     getStarted: "Boshlash",
+    projectView: "Barcha loyihalarni ko‘rish",
+    mostCommonQuestions: "Ko‘p beriladigan savollar",
   },
   ru: {
+    mostCommonQuestions: "Часто задаваемые вопросы",
+
+    projectView: "Просмотреть все проекты",
     exploreServices: "Изучите наши услуги",
     getStarted: "Начать",
     featureProjects: "Избранные Проекты",
@@ -112,7 +118,8 @@ const t = {
     subject: "Тема",
     message: "Сообщение",
     sendMessage: "Отправить сообщение",
-    projectDiskription: "Изучите некоторые из наших последних проектов и посмотрите, как мы помогли нашим клиентам достичь их целей.",
+    projectDiskription:
+      "Изучите некоторые из наших последних проектов и посмотрите, как мы помогли нашим клиентам достичь их целей.",
     offer:
       "Мы предлагаем комплексные решения в области автоматизации ИИ, записи голоса, перевода и создания контента.",
     ourService: "Наши Услуги",
@@ -203,9 +210,11 @@ const t = {
     service_2: "Высококачественные технологии",
     service_3: "Доверие и удовлетворенность клиентов",
     ourStory: "Наша история",
-    
   },
   en: {
+    mostCommonQuestions: "Frequently Asked Questions",
+
+    projectView: " View All Projects",
     email: "Email",
     name: "Name",
     exploreServices: "Explore Our Services",
@@ -220,7 +229,8 @@ const t = {
     location: "Location",
     locationText: "Phnom Penh, Cambodia",
     featureProjects: "Featured Projects",
-    projectDiskription: "Explore some of our recent projects and see how we've helped our clients achieve their goals.",
+    projectDiskription:
+      "Explore some of our recent projects and see how we've helped our clients achieve their goals.",
     offer:
       "We offer comprehensive solutions in AI automation, voice recording, translation, and content creation.",
     ourService: "Our Services",
