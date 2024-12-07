@@ -1,12 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import { ArrowRight } from "lucide-react";
 import { Header } from "./Components/Header";
 import Footer from "./Components/Footer";
 import t from "./utils/language";
 import { useDispatch, useSelector } from "react-redux";
-import { setDarkModee } from "./redux/Control";
+
 import { motion } from "framer-motion";
 import { AnimatedText } from "./shared/AnimatedText";
 import { RotatingText } from "./shared/RotatingText";
@@ -21,11 +21,13 @@ import {
   Phone,
   PenTool,
 } from "lucide-react";
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 function Landing() {
   const darkMode = useSelector((s) => s.control.darkmode);
   const currentLanguage = useSelector((s) => s.control.language);
-  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -250,6 +252,65 @@ function Landing() {
         "https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
     },
   ];
+  const teamMembers = [
+    {
+      name: "Navruz Muradovich",
+      role: "Director of Social Media Strategy",
+      image:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+      exportise:
+        "Social media trends, platform algorithms, and engagement tactics",
+      responsibility:
+        "Developing and executing social media strategies across platforms.",
+    },
+    {
+      exportise: "AI algorithms, machine learning, and data analytics.",
+      responsibility:
+        "Leading AI initiatives, model development, and performance optimization.",
+      name: "Zarina Mamadullayeva",
+      role: "Head of AI Development",
+      image:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+    },
+    {
+      name: "Obidkhon Makhamatov",
+      role: "Lead Automation Architect",
+      image: "https://demo-source.imgix.net/bucket_hat.jpg",
+      exportise: "Automation systems, integration, and scalability",
+      responsibility: "Designing and maintaining automation infrastructure.",
+    },
+    {
+      exportise:
+        "Content strategy, voice talent management, and multilingual communication.",
+      responsibility:
+        "Overseeing content quality, alignment with brand voice, and talent development.",
+      name: "Gulsima Movlonova",
+      role: "Chief Content Strategist and Voice Talent Coordinator",
+      image:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
+    },
+  ];
+
+  // Slider sozlamalari
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 1000,
+    responsive: [
+      {
+        breakpoint: 768, // Mobil format uchun
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          autoplay: false, // Mobil versiyada autoplay o'chiriladi
+        },
+      },
+    ],
+  };
   return (
     <div
       className={`${
@@ -343,27 +404,51 @@ function Landing() {
             <h2 className="text-2xl font-semibold mb-8">
               {t[currentLanguage].ourTeam}
             </h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                {
-                  name: "Shakhzod Tursunov",
-                  role: "Founder & CEO",
-                  image:
-                    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
-                },
-                {
-                  name: "Kami",
-                  role: "Project Manager & Chief Content Strategist",
-                  image:
-                    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
-                },
-                {
-                  name: "Gulsima",
-                  role: "Recruitment Specialist & Translator",
-                  image:
-                    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80",
-                },
-              ].map((member, index) => (
+            <div className="hidden md:block">
+              <Slider {...sliderSettings}>
+                {teamMembers.map((member, index) => (
+                  <motion.div
+                    key={member.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="bg-white dark:bg-gray-800 h-[400px] rounded-lg shadow-md overflow-hidden mb-2.5 last:mb-0"
+                  >
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-48 object-cover"
+                    />
+                    <div className="p-4">
+                      <h3 className="font-semibold text-lg">{member.name}</h3>
+                      <p className="text-gray-400">{member.role}</p>
+                      <div className="ml-3">
+                        <div className="flex gap-2 mt-2 items-start">
+                          <div className="w-[10px] h-[8px] mt-2 rounded-[999px] bg-black"></div>
+                          <span className="text-gray-400">
+                            <strong className="text-black mr-1 font-bold">
+                              Expertise:
+                            </strong>
+                            {member.exportise}
+                          </span>
+                        </div>
+                        <div className="flex gap-2 items-start">
+                          <div className="w-[10px] h-[8px] mt-2 rounded-[999px] bg-black"></div>
+                          <span className="text-gray-400">
+                            <strong className="text-black mr-1 font-bold">
+                              Responsibilities:
+                            </strong>
+                            {member.responsibility}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </Slider>
+            </div>
+            <div className="grid md:hidden gap-8">
+              {teamMembers.map((member, index) => (
                 <motion.div
                   key={member.name}
                   initial={{ opacity: 0, y: 20 }}
@@ -379,6 +464,26 @@ function Landing() {
                   <div className="p-4">
                     <h3 className="font-semibold text-lg">{member.name}</h3>
                     <p className="text-gray-400">{member.role}</p>
+                    <div className="ml-3">
+                      <div className="flex gap-2 mt-2 items-start">
+                        <div className="w-[10px] h-[8px] mt-2 rounded-[999px] bg-black"></div>
+                        <span className="text-gray-400">
+                          <strong className="text-black mr-1 font-bold">
+                            Expertise:
+                          </strong>
+                          {member.exportise}
+                        </span>
+                      </div>
+                      <div className="flex gap-2 items-start">
+                        <div className="w-[10px] h-[8px] mt-2 rounded-[999px] bg-black"></div>
+                        <span className="text-gray-400">
+                          <strong className="text-black mr-1 font-bold">
+                            Responsibilities:
+                          </strong>
+                          {member.responsibility}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               ))}

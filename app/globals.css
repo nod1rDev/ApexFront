@@ -11,3 +11,10 @@ body {
 button {
   color: white;
 }
+.slick-slide {
+  padding: 0 5px; /* Har bir elementning chap va o'ng tomonida 5px bo'sh joy */
+}
+
+.slick-list {
+  margin: 0 -5px; /* Bo'sh joyni to'g'ri joylashtirish uchun */
+}
