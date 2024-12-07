@@ -552,8 +552,11 @@ function Landing() {
           {t[currentLanguage].mostCommonQuestions}
         </h1>
         <div className="max-w-[90%] md:max-w-[65%] mx-auto">
-          {commonQuestions.map((common) => (
-            <div className="collapse collapse-arrow bg-white dark:bg-gray-900 text-black dark:text-white">
+          {commonQuestions.map((common, i) => (
+            <div
+              key={i}
+              className="collapse collapse-arrow bg-white dark:bg-gray-900 text-black dark:text-white"
+            >
               <input type="radio" name="my-accordion-2" defaultChecked />
               <div className="collapse-title text-xl font-medium">
                 {common.question}
