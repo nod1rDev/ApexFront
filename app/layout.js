@@ -1,3 +1,7 @@
+import Root from "./Components/Root";
+import RootContent from "./Components/RootContent";
+import "./globals.css";
+
 export const metadata = {
   metadataBase: new URL("https://apexbratai.vercel.app/"),
   keywords: [
@@ -49,3 +53,16 @@ export const metadata = {
     },
   ],
 };
+
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="uz">
+      <body className="antialiased h-[100vh] bg-white dark:bg-gray-900">
+        <Root>
+          <RootContent>{children}</RootContent>
+        </Root>
+      </body>
+    </html>
+  );
+}
