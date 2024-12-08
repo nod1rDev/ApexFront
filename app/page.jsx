@@ -328,7 +328,7 @@ function Landing() {
           className="absolute inset-0 bg-cover bg-center z-0"
           style={{
             backgroundImage:
-              'url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80")',
+              'url("/photo-hero.avif")',
           }}
         >
           <div className="absolute inset-0 bg-gray-900/70"></div>
